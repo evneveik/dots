@@ -1,0 +1,47 @@
+#! /bin/sh
+
+# nvidia-settings --load-config-only
+
+
+xrandr --output HDMI-0 --auto --primary --output DP-4 --right-of HDMI-0 --rotate left
+
+# pidof lxqt-policykit-agent | xargs kill
+# lxqt-policykit-agent &
+~/.config/polybar/launch.sh &
+~/.fehbg &
+pidof sxhkd | xargs kill
+sxhkd &
+
+bspc monitor HDMI-0 -d I II III IV
+bspc monitor DP-4 -d V VII VIII IX
+bspc config border_width     		4
+bspc config window_gap          	5
+
+bspc config split_ratio          	0.52
+bspc config borderless_monocle   	true
+bspc config gapless_monocle      	true
+bspc config honor_size_hints     	true
+# bspc config focus_follows_pointer 	true
+bspc config automatic_scheme 	 	longest_side
+
+# . "${HOME}/.cache/wal/colors.sh"
+
+# Set the border colors.
+# bspc config normal_border_color "$color0"
+# bspc config active_border_color "$color5"
+# bspc config focused_border_color "$color12"
+
+bspc rule -a \*:"htop" state=floating
+bspc rule -a \*:"pulsemixer" state=floating
+bspc rule -a \*:"GodotToVim" hidden=on
+bspc rule -a Godot state=floating locked=on
+bspc rule -a Gimp desktop='^2' state=floating follow=on
+bspc rule -a Chromium desktop='^1'
+bspc rule -a Steam desktop='^4' state=floating
+bspc rule -a yuzu state=floating
+bspc rule -a Lutris state=floating
+bspc rule -a Blender desktop='^3' state=floating locked=on
+bspc rule -a \*:"FuzzyWin" state=floating center=on sticky=on
+bspc rule -a firefox state=floating
+
+bspc rule -a \*:"Scratchpad" state=floating center=on sticky=on 
